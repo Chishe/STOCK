@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="cardBox">
+    <div class="card-alert">
+      <div class="sidebars">
+        <a href="/main">MAIN</a>
+        <a href="/cbrsl4">Pess Part</a>
+        <a href="/cbrsl4">Center Repack</a>
+        <div class="dropdown">
+          <div class="dropdown-btn">ALL(ฺBRS) ▼</div>
+          <div class="dropdown-content">
+            <a href="/cbrsl1">Line 1</a>
+            <a href="/cbrsl4">Line 4</a>
+          </div>
+        </div>
+        <a href="/">HOME</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+  document.querySelector(".dropdown-btn").addEventListener("click", function () {
+    this.parentElement.classList.toggle("active");
+  });
+</script>

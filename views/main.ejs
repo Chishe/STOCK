@@ -2,16 +2,20 @@
 <%- include('partials/navbar') %>
 
 <div class="grid-containers">
-    <div class="grid-items item1">
+    <div class="grid-items item1s">
         <%- include('partials/menu') %>
     </div>
-    <div class="grid-items item2">
-        <canvas id="myChart" width="370" height="240"></canvas>
+    <div class="grid-items item2s">
+      <div class="chart-container" style="position: relative; height:39vh; width:80vw">
+        <canvas id="myChart"></canvas>
     </div>
-    <div class="grid-items item3">
-        <canvas id="myChart2" width="370" height="240"></canvas>
     </div>
-    <div class="grid-items item4">
+    <div class="grid-items item3s">
+        <div class="chart-container" style="position: relative; height:39vh; width:80vw">
+          <canvas id="myChart2"></canvas>
+      </div>
+    </div>
+    <div class="grid-items item4s">
       <div class="container">
         <div class="form-container">
           <form id="updateForm">
@@ -21,8 +25,8 @@
             <label>Input Core Volume</label>
             <input type="number" id="volumn" name="volumn" required>
       
-            <button type="submit">Submit</button>
-            <button onclick="window.location.reload();">Refresh</button>
+            <button type="submit" style="background-color: greenyellow; color: #2b3467;"><i class="fa fa-search" style="font-size:36px"></i>Search</button>
+            <button onclick="window.location.reload();" style="background-color: yellow; color: #2b3467;"><i class="fa fa-refresh" style="font-size:36px;"></i>Refresh</button>
           </form>
         </div>
       
@@ -194,18 +198,28 @@
         return;
       }
       const tableBody = document.querySelector('#stockTable tbody');
-      data.tableData.forEach(row => {
-        const tableRow = document.createElement('tr');
-        const partNumberCell = document.createElement('td');
-        const statusCell = document.createElement('td');
-        
-        partNumberCell.textContent = row.partNumber;
-        statusCell.textContent = row.status;
+data.tableData.forEach(row => {
+  const tableRow = document.createElement('tr');
+  const partNumberCell = document.createElement('td');
+  const statusCell = document.createElement('td');
+  
+  partNumberCell.textContent = row.partNumber;
+  statusCell.textContent = row.status;
 
-        tableRow.appendChild(partNumberCell);
-        tableRow.appendChild(statusCell);
-        tableBody.appendChild(tableRow);
-      });
+  // Apply background color based on the status
+  if (row.status === "NG") {
+    statusCell.style.backgroundColor = 'red';
+    statusCell.style.color = 'white'; // To make text visible on red background
+  } else if (row.status === "OK") {
+    statusCell.style.backgroundColor = 'green';
+    statusCell.style.color = 'white'; // To make text visible on green background
+  }
+
+  tableRow.appendChild(partNumberCell);
+  tableRow.appendChild(statusCell);
+  tableBody.appendChild(tableRow);
+});
+
       const labels = data.labels;
       const quantities = data.values; 
       const channels = data.channels;

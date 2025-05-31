@@ -8,9 +8,6 @@
       <div class="grid-itemsx item2x">
         <div class="container">
           <form id="stockForm">
-            <label for="id_part_no">ID:</label>
-            <input type="text" id="id_part_no" name="id_part_no" required><br><br>
-
             <label for="part_no">Part Number:</label>
             <input type="text" id="part_no" name="part_no" required><br><br>
 
@@ -33,6 +30,8 @@
 
 
     <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script>
       const ctx2 = document.getElementById("myChart2").getContext("2d");
 
@@ -46,7 +45,7 @@
         data: {
           labels: [],
           datasets: [{
-            label: "Press Part",
+            label: "Surface",
             data: [],
             backgroundColor: gradient2,
             borderColor: "rgba(0, 0, 0, 0)",
@@ -104,12 +103,13 @@
       });
 
       setInterval(() => {
-        fetch('http://192.168.1.103:3000/api/getPresspart')
+        fetch('http://192.168.1.103:3000/api/getSurface')
           .then(response => response.json())
           .then(data => {
             myChart2.data.labels = data.ppLb;
             myChart2.data.datasets[0].data = data.ppQty;
             myChart2.update();
+            console.log(data.ppLb)
           })
           .catch(error => {
             console.error('Error fetching data:', error);
@@ -118,7 +118,6 @@
 
 
       function submitForm(type) {
-        const id_part_no = document.getElementById("id_part_no").value;
         const partNo = document.getElementById("part_no").value;
         const quantity = parseInt(document.getElementById("quantity").value);
 
@@ -128,13 +127,12 @@
         }
 
         const data = {
-          id_part_no: id_part_no,
           part_no: partNo,
           quantity: quantity,
           type: type,
         };
 
-        fetch('/api/updateStock1', {
+        fetch('http://192.168.1.103:3000/api/updateStock6', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -20,7 +20,9 @@
       
       <div id="message"></div>
       
-      <canvas id="myChart2" width="370" height="220"></canvas>
+      <div style="width: 100%; overflow-x: auto;height: 700px;">
+        <canvas id="myChart2" style="min-width: 1200px; height: 100%;"></canvas>
+      </div>
     </div>
   </div>
 </div>
@@ -29,58 +31,76 @@
 
 <link rel="stylesheet" href="/styles.css">
 <script>
-  const ctx2 = document.getElementById("myChart2").getContext("2d");
+ const ctx2 = document.getElementById("myChart2").getContext("2d");
 
-  const gradient2 = ctx2.createLinearGradient(0, 0, 0, 800);
-  gradient2.addColorStop(0, "rgb(0, 128, 255)");
-  gradient2.addColorStop(0.5, "rgb(0, 255, 128)");
-  gradient2.addColorStop(1, "rgb(255, 128, 0)");
-  
-  const myChart2 = new Chart(ctx2, {
-    type: "bar",
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: "Core BRS Line 4",
-          data: [],
-          backgroundColor: gradient2,
-          borderColor: "rgba(0, 0, 0, 0)",
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      scales: {
-        x: {
-          title: { display: true, text: "Part Number", color: "white", font: { size: 12 } },
-          ticks: { color: "white", font: { size: 18 } },
-          grid: { color: "rgba(186, 223, 238, 0.5)" },
-        },
-        y: {
-          beginAtZero: true,
-          title: { display: true, text: "Change", color: "white", font: { size: 12 } },
-          ticks: { color: "white" },
-          grid: { color: "rgba(186, 223, 238, 0.5)" },
-        },
-      },
-      plugins: {
-        legend: { labels: { color: "lightblue", font: { size: 14 } } },
-        datalabels: {
+const gradient2 = ctx2.createLinearGradient(0, 0, 0, 800);
+gradient2.addColorStop(0, "rgb(0, 128, 255)");
+gradient2.addColorStop(0.5, "rgb(0, 255, 128)");
+gradient2.addColorStop(1, "rgb(255, 128, 0)");
+
+const myChart2 = new Chart(ctx2, {
+  type: "bar",
+  data: {
+    labels: [],
+    datasets: [{
+      label: "Core BRS Line 4",
+      data: [],
+      backgroundColor: gradient2,
+      borderColor: "rgba(0, 0, 0, 0)",
+      borderWidth: 1,
+      barThickness: 10,
+      categoryPercentage: 0.7,
+      barPercentage: 0.9,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Part Number",
           color: "white",
-          anchor: "center",
-          align: "center",
-          font: { weight: "bold", size: 16 },
-          formatter: (value) => value,
+          font: { size: 16 }
         },
+        ticks: {
+          color: "white",
+          font: { size: 10, weight: "bold" },
+          align: "center",
+          maxRotation: 45,
+          minRotation: 45,
+          autoSkip: false
+        },
+        grid: { color: "rgba(186, 223, 238, 0.5)" }
       },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Quantity",
+          color: "white",
+          font: { size: 16 }
+        },
+        ticks: { color: "white", font: { size: 14 } },
+        grid: { color: "rgba(186, 223, 238, 0.5)" }
+      }
     },
-    plugins: [ChartDataLabels],
-  });
-  
+    plugins: {
+      legend: { labels: { color: "lightblue", font: { size: 14 } } },
+      datalabels: {
+        color: "white",
+        anchor: "center",
+        align: "center",
+        font: { weight: "bold", size: 14 },
+        formatter: (value) => value
+      }
+    }
+  },
+  plugins: [ChartDataLabels]
+});
   setInterval(() => {
-    fetch('http://192.168.1.103/api/getCoreBRS4')
+    fetch('http://192.168.1.103:3000/api/getCoreBRS4')
       .then(response => response.json())
       .then(data => {
         myChart2.data.labels = data.ppLb;
@@ -108,7 +128,7 @@
       type: type,
     };
   
-    fetch('http://192.168.1.103/api/updateStock4', {
+    fetch('http://192.168.1.103:3000/api/updateStock4', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

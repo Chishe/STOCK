@@ -8,9 +8,6 @@
       <div class="grid-itemsx item2x">
         <div class="container">
           <form id="stockForm">
-            <label for="id_part_no">ID:</label>
-            <input type="text" id="id_part_no" name="id_part_no" required><br><br>
-
             <label for="part_no">Part Number:</label>
             <input type="text" id="part_no" name="part_no" required><br><br>
 
@@ -46,7 +43,7 @@
         data: {
           labels: [],
           datasets: [{
-            label: "Press Part",
+            label: "Core BRS Line 3",
             data: [],
             backgroundColor: gradient2,
             borderColor: "rgba(0, 0, 0, 0)",
@@ -104,7 +101,7 @@
       });
 
       setInterval(() => {
-        fetch('http://192.168.1.103:3000/api/getPresspart')
+        fetch('http://192.168.1.103:3000/api/getCoreBRS1')
           .then(response => response.json())
           .then(data => {
             myChart2.data.labels = data.ppLb;
@@ -118,7 +115,6 @@
 
 
       function submitForm(type) {
-        const id_part_no = document.getElementById("id_part_no").value;
         const partNo = document.getElementById("part_no").value;
         const quantity = parseInt(document.getElementById("quantity").value);
 
@@ -128,13 +124,12 @@
         }
 
         const data = {
-          id_part_no: id_part_no,
           part_no: partNo,
           quantity: quantity,
           type: type,
         };
 
-        fetch('/api/updateStock1', {
+        fetch('http://192.168.1.103:3000/api/updateStock3', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

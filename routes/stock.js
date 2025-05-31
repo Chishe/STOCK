@@ -13,13 +13,21 @@ router.get('/ctrp', (req, res) => {
     res.render('ctrp', { title: 'Center Repack'});
 });
 
-router.get('/cbrsl1', (req, res) => {
-    res.render('cbrsl1', { title: 'Core BRS Line 1' });
+router.get('/cbrsl3', (req, res) => {
+    res.render('cbrsl3', { title: 'Core BRS Line 3' });
 });
 
 
 router.get('/cbrsl4', (req, res) => {
     res.render('cbrsl4', { title: 'Core BRS Line 4'});
+});
+
+router.get('/brz', (req, res) => {
+    res.render('brz', { title: 'Brazing'});
+});
+
+router.get('/suf', (req, res) => {
+    res.render('suf', { title: 'Surface'});
 });
 
 

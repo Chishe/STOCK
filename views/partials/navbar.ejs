@@ -1,16 +1,44 @@
-
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <button type="button" id="sidebarToggle" aria-label="Toggle sidebar" class="toggler-menu">
             <span>☰</span>
         </button>
-        
-        <a class="navbar-brand denso-logo d-flex flex-column align-items-center text-danger" href="/" style="text-decoration: none">
-            <span class="fs-1 fw-bold ms-2">DENSO</span>
-            <span class="fs-4 ms-2"><em>Crafting the Core</em></span>
+
+        <a class="navbar-brand denso-logo d-flex flex-column align-items-center text-danger" href="/"
+            style="text-decoration: none">
+            <img style="width: 150px;height: 70px;" src="/picture/logos.png">
         </a>
 
-        <h1 class="mx-auto text-center"><%= title %></h1>
+        <h1 class="mx-auto text-center">
+            <%= title %>
+        </h1>
+        <div id="stock-summary" class="d-flex align-items-center me-3">
+            <% if (title==='Center Repack' ) { %>
+                <a class="fs-5 fw-bold me-2 text-dark px-3 py-2 bg-white" href="/ss2">
+                    Summary <span style="display: block;">Stock In-Out Page</span>
+                </a>
+                <% } else if (title==='Press Part' ) { %>
+                    <a class="fs-5 fw-bold me-2 text-dark px-3 py-2 bg-white" href="/ss1">
+                        Summary <span style="display: block;">Stock In-Out Page</span>
+                    </a>
+                    <% } else if (title==='Brazing' ) { %>
+                        <a class="fs-5 fw-bold me-2 text-dark px-3 py-2 bg-white" href="/ss6">
+                            Summary <span style="display: block;">Stock In-Out Page</span>
+                        </a>
+                        <% } else if (title==='Surface' ) { %>
+                            <a class="fs-5 fw-bold me-2 text-dark px-3 py-2 bg-white" href="/ss5">
+                                Summary <span style="display: block;">Stock In-Out Page</span>
+                            </a>
+                        <% } else if (title==='Core BRS Line 4' ) { %>
+                            <a class="fs-5 fw-bold me-2 text-dark px-3 py-2 bg-white" href="/ss4">
+                                Summary <span style="display: block;">Stock In-Out Page</span>
+                            </a>
+                            <% } else if (title==='Core BRS Line 3' ) { %>
+                                <a class="fs-5 fw-bold me-2 text-dark px-3 py-2 bg-white" href="/ss3">
+                                    Summary <span style="display: block;">Stock In-Out Page</span>
+                                </a>
+                                <% } %>
+        </div>
 
         <div id="clockdate" class="navbar-text">
             <div class="clockdate-wrapper">
@@ -25,23 +53,70 @@
 <div class="sidebar" id="sidebar">
     <div class="d-flex align-items-center mt-3 ms-2">
         <button type="button" id="sidebarClose" aria-label="Close sidebar" class="toggler-menu">
-            <span >☰</span>
+            <span>☰</span>
         </button>
         <a class="navbar-brand d-flex flex-column align-items-center text-danger" href="/" style="text-decoration: none">
-            <span class="fs-1 fw-bold">DENSO</span>
-            <span class="fs-4">Crafting the Core</span>
+            <img style="width: 150px;height: 70px;" src="/picture/logos.png">
         </a>
     </div>
     <hr class="line">
     <ul class="nav flex-column">
+
         <li class="nav-item">
-            <a class="nav-link active" href="/"><i class="bi bi-house mx-4"></i>Home</a>
+            <a class="nav-link" href="/">Home</a>
         </li>
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="/setting"><i class="bi bi-gear mx-4"></i>Setting</a>
-        </li> -->
+
+        <li class="nav-item">
+            <a class="nav-link" href="/main">Search Lot ID</a>
+        </li>
+
+        <!-- Sub-Part Line Dropdown -->
+        <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#subPartLine" aria-expanded="false">
+                <i class="fa fa-dot-circle-o" style="font-size:24px"></i> Sub-Part Line
+            </a>
+            <ul class="collapse nav flex-column ms-3" id="subPartLine">
+                <li><a class="nav-link" href="/pp">- Press Part</a></li>
+                <li><a class="nav-link" href="#">- (Blank)</a></li>
+                <li><a class="nav-link" href="#">- (Blank)</a></li>
+            </ul>
+        </li>
+
+        <!-- Core Assembly Line Dropdown -->
+        <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#coreAssemblyLine" aria-expanded="false">
+                <i class="fa fa-dot-circle-o" style="font-size:24px"></i> Core Assembly Line
+            </a>
+            <ul class="collapse nav flex-column ms-3" id="coreAssemblyLine">
+                <li><a class="nav-link" href="/cbrsl1">- Line 1</a></li>
+                <li><a class="nav-link" href="/cbrsl2">- Line 2</a></li>
+                <li><a class="nav-link" href="/cbrsl3">- Line 3</a></li>
+                <li><a class="nav-link" href="/cbrsl4">- Line 4</a></li>
+                <li><a class="nav-link" href="/cbrsl5">- Line 5</a></li>
+                <li><a class="nav-link" href="/cbrsl6">- Line 6</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/mtc">Matching Part (Core & Sub)</a>
+        </li>
+
+        <!-- Setting Dropdown -->
+        <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#setting" aria-expanded="false">
+                <i class="fa fa-dot-circle-o" style="font-size:24px"></i> Setting
+            </a>
+            <ul class="collapse nav flex-column ms-3" id="setting">
+                <li><a class="nav-link" href="/setting/modify-pno">- Modify P/No. & STD</a></li>
+                <li><a class="nav-link" href="/setting/modify-history">- Modify Table History</a></li>
+                <li><a class="nav-link" href="/setting/modify-nav">- Modify Navigation Bar</a></li>
+            </ul>
+        </li>
+
     </ul>
 </div>
+
+
 
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -49,5 +124,3 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script> -->
 <script src="/js/getTime.js"></script>
 <script src="/js/sideBar.js"></script>
-
-

@@ -1,225 +1,96 @@
 <%- include('partials/head') %>
   <%- include('partials/navbar') %>
 
-    <div class="grid-containersx">
-      <div class="grid-itemsx item1x">
+    <div class="grid-containers">
+      <div class="grid-items item1s">
         <%- include('partials/menu') %>
       </div>
-      <div class="grid-itemsx item2x">
-        <div class="container">
-          <form id="stockForm">
-            <label for="id_part_no">ID:</label>
-            <input type="text" id="id_part_no" name="id_part_no" required><br><br>
+      <div class="grid-items item2s">
 
-            <label for="part_no">Part Number:</label>
-            <input type="text" id="part_no" name="part_no" required><br><br>
 
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" required><br><br>
-
-            <button type="button" onclick="submitForm('IN')" class="in">IN</button>
-            <button type="button" onclick="submitForm('OUT')" class="out">OUT</button>
-          </form>
-
-          <div id="message"></div>
-
-          <div style="width: 100%; overflow-x: auto;height: 700px;">
-            <canvas id="myChart2" style="min-width: 1200px; height: 100%;"></canvas>
-          </div>
+        <div style="width: 100%; overflow-x: auto;height: 39vh;">
+          <canvas id="myChart2" style="min-width: 500px; height: 100%;"></canvas>
         </div>
       </div>
-    </div>
+      <div class="grid-items item3s">
+        <div class="table-container">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <th>Seq No</th>
+                <th>ID Part No</th>
+                <th>Quantity</th>
+                <th>Stock in Time</th>
+                <th>Stock out Time</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid-items item4s">
+        <div class="container">
+          <form id="stockForm">
+            <div class="radio-buttons">
+              <label>
+                <input type="radio" name="formType" value="normal" checked onchange="toggleFormType()"> Normal Form
+              </label>
+              <label>
+                <input type="radio" name="formType" value="partialin" onchange="toggleFormType()"> Partial in Line
+              </label>
+              <label>
+                <input type="radio" name="formType" value="partial" onchange="toggleFormType()"> Partial QR Scan
+              </label>
+            </div>
+
+            <div id="normalForm">
+              <label for="id_part_no">QR code:</label>
+              <input type="text" id="id_part_no" name="id_part_no" required>
+
+              <label for="part_no">Part Number:</label>
+              <input type="text" id="part_no" name="part_no" required>
+            </div>
+
+            <div id="partialinline" style="display: none;">
+              <label for="in_qr_code">QR Code:</label>
+              <input type="text" id="in_qr_code" name="in_qr_code" disabled>
+
+              <label for="in_part_no">Part Number:</label>
+              <input type="text" id="in_part_no" name="in_part_no" disabled>
+
+              <label for="in_quantity">Quantity:</label>
+              <input type="text" id="in_quantity" name="in_quantity" required>
+            </div>
+
+            <div id="partialForm" style="display: none;">
+              <label for="qr_code">QR Code:</label>
+              <input type="text" id="qr_code" name="qr_code" disabled>
+
+              <label for="partial_part_no">Part Number:</label>
+              <input type="text" id="partial_part_no" name="part_no" disabled>
+
+              <label for="partial_quantity">Quantity:</label>
+              <input type="number" id="partial_quantity" name="quantity" disabled>
+            </div>
+
+            <div class="in-out-buttons">
+              <button type="button" onclick="submitForm('IN')" id="IN" class="in"><i class="fa fa-save"
+                  style="font-size:36px;"></i>IN</button>
+              <button type="button" onclick="submitForm('OUT')" id="OUT" class="out"><i class="fa fa-send-o"
+                  style="font-size:36px"></i>OUT</button>
+            </div>
+          </form>
+        </div>
+      </div>
 
 
 
-    <link rel="stylesheet" href="/styles.css">
-    <script>
-      const ctx2 = document.getElementById("myChart2").getContext("2d");
+      <link rel="stylesheet" href="/styles.css">
+      <link rel="stylesheet" href="/css/pp.css">
+      <script src="/js/ppTable.js"></script>
+      <script src="/js/ppChart.js"></script>
+      <script src="/js/ppQuery.js"></script>
+      </body>
 
-      const gradient2 = ctx2.createLinearGradient(0, 0, 0, 800);
-      gradient2.addColorStop(0, "rgb(0, 128, 255)");
-      gradient2.addColorStop(0.5, "rgb(0, 255, 128)");
-      gradient2.addColorStop(1, "rgb(255, 128, 0)");
-
-      const myChart2 = new Chart(ctx2, {
-        type: "bar",
-        data: {
-          labels: [],
-          datasets: [{
-            label: "Press Part",
-            data: [],
-            backgroundColor: gradient2,
-            borderColor: "rgba(0, 0, 0, 0)",
-            borderWidth: 1,
-            barThickness: 10,
-            categoryPercentage: 0.7,
-            barPercentage: 0.9,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: "Part Number",
-                color: "white",
-                font: { size: 16 }
-              },
-              ticks: {
-                color: "white",
-                font: { size: 10, weight: "bold" },
-                align: "center",
-                maxRotation: 45,
-                minRotation: 45,
-                autoSkip: false
-              },
-              grid: { color: "rgba(186, 223, 238, 0.5)" }
-            },
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: "Quantity",
-                color: "white",
-                font: { size: 16 }
-              },
-              ticks: { color: "white", font: { size: 14 } },
-              grid: { color: "rgba(186, 223, 238, 0.5)" }
-            }
-          },
-          plugins: {
-            legend: { labels: { color: "lightblue", font: { size: 14 } } },
-            datalabels: {
-              color: "white",
-              anchor: "center",
-              align: "center",
-              font: { weight: "bold", size: 14 },
-              formatter: (value) => value
-            }
-          }
-        },
-        plugins: [ChartDataLabels]
-      });
-
-      setInterval(() => {
-        fetch('http://192.168.1.103:3000/api/getPresspart')
-          .then(response => response.json())
-          .then(data => {
-            myChart2.data.labels = data.ppLb;
-            myChart2.data.datasets[0].data = data.ppQty;
-            myChart2.update();
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, 1000);
-
-
-      function submitForm(type) {
-        const id_part_no = document.getElementById("id_part_no").value;
-        const partNo = document.getElementById("part_no").value;
-        const quantity = parseInt(document.getElementById("quantity").value);
-
-        if (!partNo || !quantity) {
-          document.getElementById("message").innerText = "Please enter both part number and quantity.";
-          return;
-        }
-
-        const data = {
-          id_part_no: id_part_no,
-          part_no: partNo,
-          quantity: quantity,
-          type: type,
-        };
-
-        fetch('/api/updateStock1', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-          .then(response => response.json())
-          .then(result => {
-            document.getElementById("message").innerText = result.message;
-          })
-          .catch(error => {
-            document.getElementById("message").innerText = "Error: " + error.message;
-          });
-      }
-    </script>
-    </body>
-
-    </html>
-    <title>Stock Form</title>
-    <style>
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        min-height: 100%;
-        border-radius: 12px;
-      }
-
-      #stockForm {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #2a2a3e;
-        padding: 10px;
-        border-radius: 10px;
-        border: 2px solid #000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        margin-bottom: 30px;
-      }
-
-      #stockForm label {
-        display: block;
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 8px;
-        color: #fff;
-      }
-
-      #stockForm input {
-        width: 20%;
-        padding: 10px;
-        margin-right: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-      }
-
-      #stockForm button {
-        width: 80px;
-        padding: 10px;
-        margin-left: 10px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        color: white;
-      }
-
-      #stockForm button:hover {
-        opacity: 0.8;
-      }
-
-      .in {
-        background-color: #28a745;
-      }
-
-      .out {
-        background-color: #dc3545;
-      }
-
-      #message {
-        font-size: 16px;
-        margin-top: 20px;
-        color: #007bff;
-      }
-    </style>
+      </html>

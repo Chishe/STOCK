@@ -11,11 +11,12 @@
   <div class="cardBox">
     <div class="card-alert">
       <div class="sidebars">
-        <a href="/main">MAIN</a>
-        <a href="/pp">Pess Part</a>
+        <a href="/main">Search Subpart</a>
+        <a href="/pp">Press Part</a>
         <a href="/ctrp">Center Repack</a>
+        <a href="/mtc">Matching</a>
         <div class="dropdown">
-          <div class="dropdown-btn">ALL(ฺBRS) ▼</div>
+          <div class="dropdown-btn1">ALL(ฺBRS) ▼</div>
           <div class="dropdown-content">
             <a href="/cbrsl3">Line 3</a>
             <a href="/cbrsl4">Line 4</a>
@@ -23,6 +24,13 @@
         </div>
         <a href="/brz">Brazing</a>
         <a href="/suf">Surface</a>
+        <div class="dropdown">
+          <div class="dropdown-btn2">Setting ▼</div>
+          <div class="dropdown-content">
+            <a href="/set1">Press Part</a>
+            <a href="/set2">Center Repack</a>
+          </div>
+        </div>
         <a href="/">HOME</a>
       </div>
     </div>
@@ -31,7 +39,10 @@
 
 </html>
 <script>
-  document.querySelector(".dropdown-btn").addEventListener("click", function () {
+  document.querySelector(".dropdown-btn1").addEventListener("click", function () {
+    this.parentElement.classList.toggle("active");
+  });
+  document.querySelector(".dropdown-btn2").addEventListener("click", function () {
     this.parentElement.classList.toggle("active");
   });
 </script>

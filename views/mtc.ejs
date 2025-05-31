@@ -1,0 +1,164 @@
+<%- include('partials/head') %>
+    <%- include('partials/navbar') %>
+
+        <div class="grid-containerss">
+            <div class="grid-itemss item1ss">
+                <%- include('partials/menu') %>
+            </div>
+            <div class="grid-itemss item2ss">
+                <div class="table-container">
+                    <table id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Seq ID</th>
+                                <th>Core ID</th>
+                                <th>Line</th>
+                                <th>Model</th>
+                                <th>Part No. Core</th>
+                                <th>Tank (Btm)</th>
+                                <th>Tank (Top)</th>
+                                <th>Header (Btm)</th>
+                                <th>Header (Top)</th>
+                                <th>Block Joint</th>
+                                <th>Cup (Upper)</th>
+                                <th>Cup (Lower)</th>
+                                <th>Cap</th>
+                                <th>Separator 1</th>
+                                <th>Separator 2</th>
+                                <th>Separator 3</th>
+                                <th>Separator 4</th>
+                                <th>Separator 5</th>
+                                <th>Separator 6</th>
+                                <th>Separator 7</th>
+                                <th>Side P (Btm)</th>
+                                <th>Side P (Top)</th>
+                                <th>Tube</th>
+                                <th>Stock</th>
+                                <th>Press Q'ty Part/Lot</th>
+                                <th>Center Repack/Lot</th>
+                                <th>Kanban Before Brazing/Lot</th>
+                                <th>Kanban B/Z, He & Cam, SFT, Final/Lot</th>
+                                <th>Box FG/Kanban</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="grid-itemss item3ss">
+                <div class="container">
+                    <div class="form-container">
+                        <form id="insertform">
+                            <label>Tank (Btm)</label>
+                            <input type="text" id="tank_btm" name="tank_btm" disabled>
+
+                            <label>Tank (Top)</label>
+                            <input type="text" id="tank_top" name="tank_top" disabled>
+
+                            <label>Header(Btm)</label>
+                            <input type="text" id="header_btm" name="header_btm" disabled>
+
+                            <label>Header(Top)</label>
+                            <input type="text" id="header_top" name="header_top" disabled>
+
+                            <!-- <label>Core id</label>
+                            <input type="text" id="core_id" name="core_id" required>
+
+                            <label>Model</label>
+                            <input type="text" id="model" name="model" required> -->
+
+                            <label>Core Part Number</label>
+                            <input type="text" id="corenumber" name="corenumber" required>
+
+                            <label>Input Core Volume</label>
+                            <input type="text" id="volumn" name="volumn" required>
+
+                            <button type="submit" style="background-color: greenyellow; color: #2b3467;">
+                                <i class="fa fa-line-chart" style="font-size:36px"></i> Create
+                            </button>
+                            <button type="button" onclick="window.location.reload();"
+                                style="background-color: yellow; color: #2b3467;">
+                                <i class="fa fa-refresh" style="font-size:36px;"></i> Refresh
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/css/mct.css">
+        <script src="/js/mtcForm.js"></script>
+        <script src="/js/mtcTable.js"></script>
+        <script>
+            document.getElementById('insertform').addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const tank_btm = document.getElementById('tank_btm').value.trim();
+                const tank_top = document.getElementById('tank_top').value.trim();
+                const header_btm = document.getElementById('header_btm').value.trim();
+                // const core_id = document.getElementById('core_id').value.trim();
+                // const model = document.getElementById('model').value.trim();
+                const header_top = document.getElementById('header_top').value.trim();
+                const corenumber = document.getElementById('corenumber').value.trim();
+                const volumn = parseInt(document.getElementById('volumn').value);
+
+                if (!volumn || volumn <= 0) {
+                    alert("Please enter a valid number for Input Core Volume.");
+                    return;
+                }
+
+                const data = {
+                    tank_btm, tank_top, header_btm, header_top, corenumber, volumn
+                };
+
+                try {
+                    const [insertResult, updateResult] = await Promise.all([
+                        insertRowData(tank_btm, tank_top, header_btm, header_top, corenumber, volumn),
+                        fetch('http://192.168.1.106:1880/update-tank-matching', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        })
+                    ]);
+
+                    if (insertResult && updateResult.success) {
+                        console.log('Data inserted and stock updated successfully');
+                        clearForm(); 
+                    } else {
+                        console.log('Error in insert or update');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Unexpected error occurred!');
+                }
+            });
+
+            async function insertRowData(tank_btm, tank_top, header_btm, header_top, corenumber, volumn) {
+                try {
+                    const rowData = { tank_btm, tank_top, header_btm, header_top,corenumber, volumn };
+
+                    const response = await fetch('http://192.168.1.106:1880/api/insert-data-matching', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(rowData)
+                    });
+
+                    const result = await response.json();
+                    console.log('Insert response:', result); 
+
+                    return result.success;
+                } catch (error) {
+                    console.error("Error during insertion:", error);
+                    return false;
+                }
+            }
+
+            function clearForm() {
+                const fields = ['tank_btm', 'tank_top', 'header_btm', 'header_top', 'corenumber', 'volumn'];
+                fields.forEach(id => document.getElementById(id).value = '');
+            }
+
+        </script>

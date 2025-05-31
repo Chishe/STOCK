@@ -1,0 +1,113 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #badfee;
+    height: 100%;
+    border-radius: 12px;
+}
+
+
+.form-container {
+    width: 100%;
+    padding: 20px;
+    background: #2b3467;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+    max-height: 68vh;
+    overflow-y: auto;  
+}
+
+#insertform label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #cbdceb;
+}
+
+#insertform input {
+    color: red;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#insertform input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#insertform button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: #badfee;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+#insertform button:hover {
+    background: #0056b3;
+}
+
+.table-container {
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 67vh;
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+#data-table thead {
+    background-color: #2b3467;
+    color: white;
+    border: 1px solid #dcdcdc;
+    text-align: left;
+    font-weight: bold;
+}
+
+#data-table th {
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #dcdcdc;
+}
+
+#data-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#data-table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#data-table td {
+    background-color: #badfee;
+    color: #0056b3;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+    white-space: nowrap;
+}
+
+#data-table tbody tr:hover {
+    background-color: #dcdcdc;
+}

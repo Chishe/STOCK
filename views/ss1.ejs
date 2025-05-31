@@ -1,0 +1,99 @@
+<%- include('partials/head') %>
+    <%- include('partials/navbar') %>
+
+        <div class="grid-containersff">
+            <div class="grid-itemsff item1sff">
+                <%- include('partials/menu') %>
+            </div>
+            <div class="grid-itemsff item2sff">
+                <div class="container">
+                    <div class="search-container">
+                        <div class="search-container">
+                            <label for="searchDate">Select Date:</label>
+                            <input type="date" id="searchDate" class="input-field" placeholder="Select Date">
+
+                            <label for="searchStartTime">Select Start Time:</label>
+                            <input type="time" id="searchStartTime" class="input-field" placeholder="Select Start Time">
+
+                            <label for="searchEndTime">Select End Time:</label>
+                            <input type="time" id="searchEndTime" class="input-field" placeholder="Select End Time">
+
+                            <button onclick="searchData()">Search</button>
+                            <button onclick="deleteAll()">Delete All</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Seq No</th>
+                                    <th>ID Part No</th>
+                                    <th>Quantity</th>
+                                    <th>Stock in Time</th>
+                                    <th>Stock out Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataRows">
+                                <% data.forEach(item=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= item.id %>
+                                        </td>
+                                        <td>
+                                            <%= item.id_part_no_1 %>
+                                        </td>
+                                        <td>
+                                            <%= item.quantity %>
+                                        </td>
+                                        <td>
+                                            <%= new Date(item.timestamp).toLocaleString('en-GB', {
+                                                timeZone: 'Asia/Bangkok' }) %>
+                                        </td>
+                                        <td>
+                                            <%= item.out %>
+                                        </td>
+                                        <td>
+                                            <button class="edit"
+                                                onclick="openEditModal('<%= item.id %>', '<%= item.id_part_no_1.replace(/\r/g, '') %>', <%= item.quantity %>)">
+                                                <i class="fa fa-edit" style="font-size:36px"></i>Edit
+                                            </button>
+                                            <button class="del" onclick="deletePart('<%= item.id %>')">
+                                                <i class="fa fa-trash-o" style="font-size:36px"></i>Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close-btn" onclick="closeEditModal()">&times;</span>
+                                <h2>Edit Part</h2>
+                                <form id="editForm">
+                                    <input type="hidden" id="editId">
+                                    <label for="editPartNo">Part No:</label>
+                                    <input type="text" id="editPartNo" class="input-field">
+                                    <label for="editQty">Quantity:</label>
+                                    <input type="number" id="editQty" class="input-field">
+                                    <div class="button-group">
+                                        <button type="button" class="close-btn-alt" onclick="closeEditModal()"><i
+                                                class="fa fa-arrow-circle-left"
+                                                style="font-size:24px"></i>Close</button>
+                                        <button type="submit" class="save-btn"><i class="fa fa-save"
+                                                style="font-size:24px;"></i>Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <link rel="stylesheet" href="/styles.css">
+            <link rel="stylesheet" href="/css/ss.css">
+            <script src="/js/ss1.js"></script>
+            </body>
+
+            </html>

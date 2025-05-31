@@ -9,14 +9,17 @@
   --color-green: #00b050;
   --color-yellow: #ffc000;
 }
+*{
+  font-family: Helvetica, Arial, sans-serif;
+}
 
 body {
-  font-family: Arial, sans-serif;
   background-color: var(--color-low-dark-blue);
   margin: 0;
   font-size: 24px;
   overflow-x: hidden;
 }
+
 
 /* ----------------------------------------------------------------------------------------------------------------------- */
 .navbar {
@@ -83,7 +86,7 @@ body {
 
 /* ----------------------------------------------------------------------------------------------------------------------- */
 .clockdate-wrapper {
-  background-color: #2a2a3e;
+  background-color: #1e1e2d;
   border: 2px solid #000;
   padding: 15px;
   max-width: 450px;
@@ -94,7 +97,7 @@ body {
 }
 
 #clock {
-  background-color: #2a2a3e;
+  background-color: #1e1e2d;
   font-family: sans-serif;
   font-size: 30px;
   text-shadow: 0px 0px 1px var(--color-light-gray);
@@ -103,7 +106,7 @@ body {
 
 #clock span {
   color: #888;
-  text-shadow: 0px 0px 1px #2a2a3e;
+  text-shadow: 0px 0px 1px #1e1e2d;
   font-size: 20px;
   position: relative;
   top: -5px;
@@ -143,21 +146,23 @@ body {
   opacity: 0.4;
 }
 
-.grid-containersx {
+
+.grid-containersf {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
   grid-template-areas:
-    "item1x item2x item2x item2x"
-    "item1x item2x item2x item2x";
+    "item1sf item2sf item2sf item2sf item2sf"
+    "item1sf item3sf item3sf item3sf item3sf";
   gap: 1rem;
   margin-top: 7%;
   width: 100%;
   height: auto;
   padding: 10px;
+  box-sizing: border-box;
 }
 
-.grid-itemsx {
+.grid-itemsf {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,26 +170,64 @@ body {
   color: white;
   padding: 15px;
   border-radius: 5px;
-  min-height: 20rem;
+  width: 100%;
 }
 
-.item1x {
-  grid-area: item1x;
-  min-height: 57.5rem;
+.item1sf {
+  grid-area: item1sf;
 }
 
-.item2x {
-  grid-area: item2x;
-  min-height: 57.5rem;
+.item2sf {
+  grid-area: item2sf;
 }
+
+.item3sf {
+  grid-area: item3sf;
+}
+
+.grid-containersff {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-template-areas:
+    "item1sff item2sff item2sff item2sff item2sff"
+    "item1sff item2sff item2sff item2sff item2sff";
+  gap: 1rem;
+  margin-top: 7%;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.grid-itemsff {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark-blue);
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  width: 100%;
+  height: 56.5rem;
+}
+
+.item1sff {
+  grid-area: item1sff;
+}
+
+.item2sff {
+  grid-area: item2sff;
+}
+
 
 .grid-containers {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
   grid-template-areas:
-    "item1s item2s item2s item4s"
-    "item1s item3s item3s item4s";
+    "item1s item2s item2s item2s item4s"
+    "item1s item3s item3s item3s item3s";
   gap: 1rem;
   margin-top: 7%;
   width: 100%;
@@ -219,6 +262,85 @@ body {
   grid-area: item4s;
 }
 
+.grid-containersx {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-template-areas:
+    "item1sx item2sx item2sx item2sx item4sx"
+    "item1sx item3sx item3sx item3sx item4sx";
+  gap: 1rem;
+  margin-top: 7%;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+
+.grid-itemsx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark-blue);
+  color: white;
+  padding: 15px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.item1sx {
+  grid-area: item1sx;
+}
+
+.item2sx {
+  grid-area: item2sx;
+}
+
+.item3sx {
+  grid-area: item3sx;
+}
+
+.item4sx {
+  grid-area: item4sx;
+}
+
+.grid-containerss {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-template-areas:
+    "item1 item2 item2 item2 item3"
+    "item1 item2 item2 item2 item3";
+  gap: 1rem;
+  margin-top: 7%;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+
+.grid-itemss {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark-blue);
+  color: white;
+  padding: 15px;
+  width: 100%;
+  min-height: 51.5rem;
+  border-radius: 5px;
+}
+
+.item1ss {
+  grid-area: item1;
+}
+
+.item2ss {
+  grid-area: item2;
+}
+
+.item3ss {
+  grid-area: item3;
+}
+
 
 .item1 {
   grid-area: item1;
@@ -234,6 +356,47 @@ body {
 .item4 {
   grid-area: item4;
   min-height: 57.5rem;
+}
+
+.grid-containerq {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-template-areas:
+    "item1q item2q item2q item2q item3q"
+    "item1q item4q item4q item4q item4q";
+  gap: 1rem;
+  margin-top: 7%;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+
+.grid-itemq {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark-blue);
+  color: white;
+  padding: 15px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.item1q {
+  grid-area: item1q;
+}
+
+.item2q {
+  grid-area: item2q;
+}
+
+.item3q {
+  grid-area: item3q;
+}
+
+.item4q {
+  grid-area: item4q;
 }
 
 /* ----------------------------------------------------------------------------------------------------------------------- */
@@ -533,7 +696,7 @@ h2 {
 }
 
 
-.cardBox::before {
+/* .cardBox::before {
   content: "";
   position: absolute;
   width: 40%;
@@ -544,7 +707,7 @@ h2 {
   animation: glowing01 5s linear infinite;
   transform-origin: center;
   animation: glowing 5s linear infinite;
-}
+} */
 
 @keyframes glowing {
   0% {
@@ -656,6 +819,30 @@ h2 {
   cursor: pointer;
 }
 
+.dropdown-btn1 {
+  display: block;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  background-color: #1a1a2e;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.dropdown-btn2 {
+  display: block;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  background-color: #1a1a2e;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
 .dropdown-btn:hover {
   background-color: #2b3467;
   color: #000814;
@@ -683,4 +870,26 @@ h2 {
 
 .dropdown.active .dropdown-content {
   display: block;
+}
+
+#stock-summary a {
+  display: inline-block;
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+#stock-summary span {
+  display: block;
+  text-align: center;
+}
+
+#stock-summary a:hover {
+  background-color: #ffcc00;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

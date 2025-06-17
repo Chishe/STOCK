@@ -56,8 +56,8 @@ const myChart2 = new Chart(ctx, {
 
 setInterval(() => {
     Promise.all([
-        fetch('http://192.168.1.106:3000/api/getPresspart').then(res => res.json()),
-        fetch('http://192.168.1.106:3000/api/getJudgementLine1').then(res => res.json())
+        fetch('http://192.168.1.100:3000/api/getPresspart').then(res => res.json()),
+        fetch('http://192.168.1.100:3000/api/getJudgementLine1').then(res => res.json())
     ])
         .then(([pressPartData, judgementData]) => {
             let labels = [];

@@ -139,7 +139,7 @@
       });
 
       setInterval(() => {
-        fetch('http://192.168.1.106:3000/api/getCoreBRS3')
+        fetch('http://192.168.1.100:3000/api/getCoreBRS3')
           .then(response => response.json())
           .then(data => {
             myChart2.data.labels = data.ppLb;
@@ -165,7 +165,7 @@
         const data = { part_no, id_part_no, quantity, type };
 
         try {
-          const response = await fetch('http://192.168.1.106:3000/insert-stock3', {
+          const response = await fetch('http://192.168.1.100:3000/insert-stock3', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
@@ -186,7 +186,7 @@
 
       async function fetchStockData() {
         try {
-          const response = await fetch('http://192.168.1.106:3000/api/latest-stock-data-3');
+          const response = await fetch('http://192.168.1.100:3000/api/latest-stock-data-3');
           const data = await response.json();
 
           const tableBody = document.getElementById("tableBody");

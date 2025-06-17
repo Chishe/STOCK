@@ -20,7 +20,7 @@ document.getElementById('insertform').addEventListener('submit', async function 
     };
 
     try {
-        const updateResponse = await fetch('http://192.168.1.106:1880/update-tank-matching', {
+        const updateResponse = await fetch('http://192.168.1.100:1880/update-tank-matching', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -56,7 +56,7 @@ async function insertRowData(tank_btm, tank_top, header_btm, header_top, core_id
     try {
         const rowData = { tank_btm, tank_top, header_btm, header_top, core_id, model, corenumber };
 
-        const response = await fetch('http://192.168.1.106:1880/api/insert-data-matching', {
+        const response = await fetch('http://192.168.1.100:1880/api/insert-data-matching', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(rowData)

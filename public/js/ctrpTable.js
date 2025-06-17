@@ -2,7 +2,7 @@ let lastData = [];
 
 async function fetchStockData() {
   try {
-    const response = await fetch('http://192.168.1.106:3000/api/latest-stock-data-2');
+    const response = await fetch('http://192.168.1.100:3000/api/latest-stock-data-2');
     const data = await response.json();
     
     if (JSON.stringify(data) === JSON.stringify(lastData)) {

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
       type: type,
     };
     console.log(data);
-    fetch('http://192.168.1.106:3000/api/updateStock2', {
+    fetch('http://192.168.1.100:3000/api/updateStock2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

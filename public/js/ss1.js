@@ -56,7 +56,7 @@ async function searchData() {
     console.log(searchDate, searchStartTime, searchEndTime);
 
     try {
-        const response = await fetch(`http://192.168.1.106:3000/search1?${queryString}`, {
+        const response = await fetch(`http://192.168.1.100:3000/search1?${queryString}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -123,7 +123,7 @@ function updateTable(data) {
 async function deleteAll() {
     if (confirm("Are you sure you want to delete all parts?")) {
         try {
-            const response = await fetch('http://192.168.1.106:3000/delete-all1', { 
+            const response = await fetch('http://192.168.1.100:3000/delete-all1', { 
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -150,7 +150,7 @@ async function deleteAll() {
 async function deletePart(id) {
     if (confirm("Are you sure you want to delete this item?")) {
         try {
-            const response = await fetch(`http://192.168.1.106:3000/delete1/${id}`, {
+            const response = await fetch(`http://192.168.1.100:3000/delete1/${id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });

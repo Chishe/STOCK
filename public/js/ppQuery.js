@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchNormalform() {
     try {
-        const response = await fetch('http://192.168.1.106:1880/api/Normal');
+        const response = await fetch('http://192.168.1.100:1880/api/Normal');
         const data = await response.json();
         document.getElementById("qr_code").value = '';
         document.getElementById("part_no").value = '';
@@ -45,7 +45,7 @@ async function fetchNormalform() {
 
 async function fetchQRCode() {
     try {
-        const response = await fetch('http://192.168.1.106:1880/api/scanQRCode');
+        const response = await fetch('http://192.168.1.100:1880/api/scanQRCode');
         const data = await response.json();
         document.getElementById("qr_code").value = '';
         document.getElementById("partial_part_no").value = '';
@@ -61,7 +61,7 @@ async function fetchQRCode() {
 
 async function fetchQRinCode() {
     try {
-        const response = await fetch('http://192.168.1.106:1880/api/inQRCode');
+        const response = await fetch('http://192.168.1.100:1880/api/inQRCode');
         const data = await response.json();
         document.getElementById("in_qr_code").value = '';
         document.getElementById("in_part_no").value = '';
@@ -172,7 +172,7 @@ function submitForm(type) {
 
     console.log("Generated SQL Query: ", query);
 
-    fetch('http://192.168.1.106:3000/api/insertData', {
+    fetch('http://192.168.1.100:3000/api/insertData', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ function submitForm(type) {
 }
 
 function updateStock(endpoint, data) {
-    fetch(`http://192.168.1.106:1880/${endpoint}`, {
+    fetch(`http://192.168.1.100:1880/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

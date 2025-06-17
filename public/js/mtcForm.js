@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('header_btm').disabled = true;
             document.getElementById('header_top').disabled = true;
 
-            const response = await fetch('http://192.168.1.106:1880/api/get-data-auto');
+            const response = await fetch('http://192.168.1.100:1880/api/get-data-auto');
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            const response = await fetch('http://192.168.1.106:1880/api/submit-data', {
+            const response = await fetch('http://192.168.1.100:1880/api/submit-data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

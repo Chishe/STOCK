@@ -61,6 +61,30 @@ router.get('/mtc', (req, res) => {
   res.render('mtc', { title: 'Matching' });
 });
 
+router.get('/mtc1', (req, res) => {
+  res.render('mtc1', { title: 'Matching Core 1' });
+});
+
+router.get('/mtc2', (req, res) => {
+  res.render('mtc2', { title: 'Matching Core 2' });
+});
+
+router.get('/mtc3', (req, res) => {
+  res.render('mtc3', { title: 'Matching Core 3' });
+});
+
+router.get('/mtc4', (req, res) => {
+  res.render('mtc4', { title: 'Matching Core 4' });
+});
+
+router.get('/mtc5', (req, res) => {
+  res.render('mtc5', { title: 'Matching Core 5' });
+});
+
+router.get('/mtc6', (req, res) => {
+  res.render('mtc6', { title: 'Matching Core 6' });
+});
+
 router.get("/ss1", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM log_data_stock_1 ORDER BY id DESC");

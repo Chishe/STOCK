@@ -56,8 +56,8 @@ const myChart2 = new Chart(ctx2, {
 
 setInterval(() => {
     Promise.all([
-        fetch('http://192.168.1.106:3000/api/getCenterrepack').then(res => res.json()),
-        fetch('http://192.168.1.106:3000/api/getJudgementLine2').then(res => res.json())
+        fetch('http://192.168.1.100:3000/api/getCenterrepack').then(res => res.json()),
+        fetch('http://192.168.1.100:3000/api/getJudgementLine2').then(res => res.json())
     ])
         .then(([pressPartData, judgementData]) => {
             let labels = [];

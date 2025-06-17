@@ -659,6 +659,282 @@ ORDER BY m.id DESC limit 600;
   }
 });
 
+app.get('/get-data-matching-1', async (req, res) => {
+  try {
+    const lineCode = '01'; 
+
+    const result = await pool.query(
+      `
+      SELECT 
+          m.id,
+          m.datetime,
+          m.part_no_core,
+          m.model,        
+          COALESCE(o.model, m.model) AS model_replaced,  
+          CASE SUBSTRING(m.core_id FROM 14 FOR 2)
+              WHEN '01' THEN '1'
+              WHEN '02' THEN '2'
+              WHEN '03' THEN '3'
+              WHEN '04' THEN '4'
+              WHEN '05' THEN '5'
+              WHEN '06' THEN '6'
+              ELSE NULL
+          END AS line, 
+          m.*           
+      FROM public.matching m
+      LEFT JOIN public.one_for_all o 
+          ON SUBSTRING(m.part_no_core FROM 5) = o.core
+      WHERE m.datetime > CURRENT_DATE - INTERVAL '2 days'
+        AND SUBSTRING(m.core_id FROM 14 FOR 2) = $1
+      ORDER BY m.id DESC
+      LIMIT 600;
+      `,
+      [lineCode] 
+    );
+
+    res.json({
+      success: true,
+      records: result.rows
+    });
+  } catch (error) {
+    console.error("Database error in /get-data-matching-1:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+});
+
+app.get('/get-data-matching-2', async (req, res) => {
+  try {
+    const lineCode = '02'; 
+
+    const result = await pool.query(
+      `
+      SELECT 
+          m.id,
+          m.datetime,
+          m.part_no_core,
+          m.model,        
+          COALESCE(o.model, m.model) AS model_replaced,  
+          CASE SUBSTRING(m.core_id FROM 14 FOR 2)
+              WHEN '01' THEN '1'
+              WHEN '02' THEN '2'
+              WHEN '03' THEN '3'
+              WHEN '04' THEN '4'
+              WHEN '05' THEN '5'
+              WHEN '06' THEN '6'
+              ELSE NULL
+          END AS line, 
+          m.*           
+      FROM public.matching m
+      LEFT JOIN public.one_for_all o 
+          ON SUBSTRING(m.part_no_core FROM 5) = o.core
+      WHERE m.datetime > CURRENT_DATE - INTERVAL '2 days'
+        AND SUBSTRING(m.core_id FROM 14 FOR 2) = $1
+      ORDER BY m.id DESC
+      LIMIT 600;
+      `,
+      [lineCode]
+    );
+
+    res.json({
+      success: true,
+      records: result.rows
+    });
+  } catch (error) {
+    console.error("Database error in /get-data-matching-1:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+});
+
+app.get('/get-data-matching-3', async (req, res) => {
+  try {
+    const lineCode = '03'; 
+
+    const result = await pool.query(
+      `
+      SELECT 
+          m.id,
+          m.datetime,
+          m.part_no_core,
+          m.model,        
+          COALESCE(o.model, m.model) AS model_replaced,  
+          CASE SUBSTRING(m.core_id FROM 14 FOR 2)
+              WHEN '01' THEN '1'
+              WHEN '02' THEN '2'
+              WHEN '03' THEN '3'
+              WHEN '04' THEN '4'
+              WHEN '05' THEN '5'
+              WHEN '06' THEN '6'
+              ELSE NULL
+          END AS line, 
+          m.*           
+      FROM public.matching m
+      LEFT JOIN public.one_for_all o 
+          ON SUBSTRING(m.part_no_core FROM 5) = o.core
+      WHERE m.datetime > CURRENT_DATE - INTERVAL '2 days'
+        AND SUBSTRING(m.core_id FROM 14 FOR 2) = $1
+      ORDER BY m.id DESC
+      LIMIT 600;
+      `,
+      [lineCode]
+    );
+
+    res.json({
+      success: true,
+      records: result.rows
+    });
+  } catch (error) {
+    console.error("Database error in /get-data-matching-1:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+});
+
+app.get('/get-data-matching-4', async (req, res) => {
+  try {
+    const lineCode = '04'; 
+
+    const result = await pool.query(
+      `
+      SELECT 
+          m.id,
+          m.datetime,
+          m.part_no_core,
+          m.model,        
+          COALESCE(o.model, m.model) AS model_replaced,  
+          CASE SUBSTRING(m.core_id FROM 14 FOR 2)
+              WHEN '01' THEN '1'
+              WHEN '02' THEN '2'
+              WHEN '03' THEN '3'
+              WHEN '04' THEN '4'
+              WHEN '05' THEN '5'
+              WHEN '06' THEN '6'
+              ELSE NULL
+          END AS line, 
+          m.*           
+      FROM public.matching m
+      LEFT JOIN public.one_for_all o 
+          ON SUBSTRING(m.part_no_core FROM 5) = o.core
+      WHERE m.datetime > CURRENT_DATE - INTERVAL '2 days'
+        AND SUBSTRING(m.core_id FROM 14 FOR 2) = $1
+      ORDER BY m.id DESC
+      LIMIT 600;
+      `,
+      [lineCode]
+    );
+
+    res.json({
+      success: true,
+      records: result.rows
+    });
+  } catch (error) {
+    console.error("Database error in /get-data-matching-1:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+});
+
+app.get('/get-data-matching-5', async (req, res) => {
+  try {
+    const lineCode = '05'; 
+
+    const result = await pool.query(
+      `
+      SELECT 
+          m.id,
+          m.datetime,
+          m.part_no_core,
+          m.model,        
+          COALESCE(o.model, m.model) AS model_replaced,  
+          CASE SUBSTRING(m.core_id FROM 14 FOR 2)
+              WHEN '01' THEN '1'
+              WHEN '02' THEN '2'
+              WHEN '03' THEN '3'
+              WHEN '04' THEN '4'
+              WHEN '05' THEN '5'
+              WHEN '06' THEN '6'
+              ELSE NULL
+          END AS line, 
+          m.*           
+      FROM public.matching m
+      LEFT JOIN public.one_for_all o 
+          ON SUBSTRING(m.part_no_core FROM 5) = o.core
+      WHERE m.datetime > CURRENT_DATE - INTERVAL '2 days'
+        AND SUBSTRING(m.core_id FROM 14 FOR 2) = $1
+      ORDER BY m.id DESC
+      LIMIT 600;
+      `,
+      [lineCode]
+    );
+
+    res.json({
+      success: true,
+      records: result.rows
+    });
+  } catch (error) {
+    console.error("Database error in /get-data-matching-1:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+});
+
+app.get('/get-data-matching-6', async (req, res) => {
+  try {
+    const lineCode = '06'; 
+
+    const result = await pool.query(
+      `
+      SELECT 
+          m.id,
+          m.datetime,
+          m.part_no_core,
+          m.model,        
+          COALESCE(o.model, m.model) AS model_replaced,  
+          CASE SUBSTRING(m.core_id FROM 14 FOR 2)
+              WHEN '01' THEN '1'
+              WHEN '02' THEN '2'
+              WHEN '03' THEN '3'
+              WHEN '04' THEN '4'
+              WHEN '05' THEN '5'
+              WHEN '06' THEN '6'
+              ELSE NULL
+          END AS line, 
+          m.*           
+      FROM public.matching m
+      LEFT JOIN public.one_for_all o 
+          ON SUBSTRING(m.part_no_core FROM 5) = o.core
+      WHERE m.datetime > CURRENT_DATE - INTERVAL '2 days'
+        AND SUBSTRING(m.core_id FROM 14 FOR 2) = $1
+      ORDER BY m.id DESC
+      LIMIT 600;
+      `,
+      [lineCode]
+    );
+
+    res.json({
+      success: true,
+      records: result.rows
+    });
+  } catch (error) {
+    console.error("Database error in /get-data-matching-1:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+});
+
 app.get("/api/latest-stock-data-1", async (req, res) => {
   try {
     const result = await pool.query(`
@@ -1691,5 +1967,5 @@ app.post('/api/updateStock6', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://192.168.1.106:${PORT}`);
+  console.log(`Server is running on http://192.168.1.100:${PORT}`);
 });

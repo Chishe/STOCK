@@ -1,6 +1,6 @@
 async function fetchDataAndUpdateTable() {
     try {
-        const response = await fetch('http://192.168.1.106:3000/get-data-matching');
+        const response = await fetch('http://192.168.1.100:3000/get-data-matching');
         const data = await response.json();
 
         if (data.success && Array.isArray(data.records)) {

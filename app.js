@@ -661,7 +661,7 @@ ORDER BY m.id DESC limit 600;
 
 app.get('/get-data-matching-1', async (req, res) => {
   try {
-    const lineCode = '01'; 
+    const lineCode = '01';
 
     const result = await pool.query(
       `
@@ -689,7 +689,7 @@ app.get('/get-data-matching-1', async (req, res) => {
       ORDER BY m.id DESC
       LIMIT 600;
       `,
-      [lineCode] 
+      [lineCode]
     );
 
     res.json({
@@ -707,7 +707,7 @@ app.get('/get-data-matching-1', async (req, res) => {
 
 app.get('/get-data-matching-2', async (req, res) => {
   try {
-    const lineCode = '02'; 
+    const lineCode = '02';
 
     const result = await pool.query(
       `
@@ -753,7 +753,7 @@ app.get('/get-data-matching-2', async (req, res) => {
 
 app.get('/get-data-matching-3', async (req, res) => {
   try {
-    const lineCode = '03'; 
+    const lineCode = '03';
 
     const result = await pool.query(
       `
@@ -799,7 +799,7 @@ app.get('/get-data-matching-3', async (req, res) => {
 
 app.get('/get-data-matching-4', async (req, res) => {
   try {
-    const lineCode = '04'; 
+    const lineCode = '04';
 
     const result = await pool.query(
       `
@@ -845,7 +845,7 @@ app.get('/get-data-matching-4', async (req, res) => {
 
 app.get('/get-data-matching-5', async (req, res) => {
   try {
-    const lineCode = '05'; 
+    const lineCode = '05';
 
     const result = await pool.query(
       `
@@ -891,7 +891,7 @@ app.get('/get-data-matching-5', async (req, res) => {
 
 app.get('/get-data-matching-6', async (req, res) => {
   try {
-    const lineCode = '06'; 
+    const lineCode = '06';
 
     const result = await pool.query(
       `
@@ -1249,7 +1249,7 @@ app.post("/api/getStockData", async (req, res) => {
   const { coreNumber, volume } = req.body;
 
   try {
-    const dbMasterQuery = `SELECT * FROM db_master WHERE part_no = $1`;
+    const dbMasterQuery = `SELECT * FROM db_master WHERE part_no = $1 `;
     const dbMasterResult = await pool.query(dbMasterQuery, [coreNumber]);
 
     if (dbMasterResult.rows.length === 0) {
@@ -1370,6 +1370,8 @@ app.get('/api/getMain1', async (req, res) => {
       FROM log_data_stock_1
       WHERE quantity != '0'
       GROUP BY part_no
+      ORDER BY total_quantity DESC 
+      LIMIT 10;
     `);
 
     const data = {
@@ -1391,6 +1393,8 @@ app.get('/api/getMain2', async (req, res) => {
       FROM log_data_stock_2
       WHERE quantity != '0'
       GROUP BY part_no
+      ORDER BY total_quantity DESC 
+      LIMIT 10;
     `);
 
     const data = {
@@ -1408,10 +1412,12 @@ app.get('/api/getMain2', async (req, res) => {
 app.get('/api/getPresspart', async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT part_no, SUM(quantity::INTEGER) AS total_quantity 
-      FROM log_data_stock_1 
-      WHERE quantity != '0' 
-      GROUP BY part_no
+    SELECT part_no, SUM(quantity::INTEGER) AS total_quantity 
+    FROM log_data_stock_1 
+    WHERE quantity != '0' 
+    GROUP BY part_no 
+    ORDER BY total_quantity DESC 
+    LIMIT 10;
     `);
     const data = result.rows;
 
@@ -1429,6 +1435,8 @@ app.get('/api/getCenterrepack', async (req, res) => {
       FROM log_data_stock_2 
       WHERE quantity != '0' 
       GROUP BY part_no
+      ORDER BY total_quantity DESC 
+      LIMIT 10;
     `);
     const data = result.rows;
 
@@ -1577,6 +1585,9 @@ app.get('/api/getCoreBRS3', async (req, res) => {
       FROM log_data_stock_3 
       WHERE quantity != '0' 
       GROUP BY part_no
+      ORDER BY total_quantity DESC 
+      LIMIT 10;
+
     `);
     const data = result.rows;
 
@@ -1600,6 +1611,9 @@ app.get('/api/getCoreBRS4', async (req, res) => {
       FROM log_data_stock_4 
       WHERE quantity != '0' 
       GROUP BY part_no
+      ORDER BY total_quantity DESC 
+      LIMIT 10;
+
     `);
     const data = result.rows;
 
@@ -1617,7 +1631,7 @@ app.get('/api/getCoreBRS4', async (req, res) => {
 
 app.get('/api/getBrazing', async (req, res) => {
   try {
-    const result = await pool.query('SELECT part_no, quantity FROM stock_data_6 WHERE quantity != \'0\'');
+    const result = await pool.query('SELECT part_no, quantity FROM stock_data_6 WHERE quantity != \'0\' ORDER BY quantity::INTEGER DESC LIMIT 10;');
 
     const data = {
       ppLb: result.rows.map(row => row.part_no),
@@ -1632,7 +1646,7 @@ app.get('/api/getBrazing', async (req, res) => {
 
 app.get('/api/getSurface', async (req, res) => {
   try {
-    const result = await pool.query('SELECT part_no, quantity FROM stock_data_5 WHERE quantity != \'0\'');
+    const result = await pool.query('SELECT part_no, quantity FROM stock_data_5 WHERE quantity != \'0\' ORDER BY quantity::INTEGER DESC LIMIT 10;');
 
     const data = {
       ppLb: result.rows.map(row => row.part_no),

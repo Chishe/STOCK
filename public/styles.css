@@ -9,7 +9,8 @@
   --color-green: #00b050;
   --color-yellow: #ffc000;
 }
-*{
+
+* {
   font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -29,6 +30,8 @@ body {
 
 /* ----------------------------------------------------------------------------------------------------------------------- */
 .sidebar {
+  overflow: auto;
+  height: 100%;
   position: fixed;
   top: 0;
   left: -320px;
@@ -785,6 +788,28 @@ h2 {
 
 .sidebars {
   width: 100%;
+  overflow: auto;
+}
+
+.sidebars::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.sidebars::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+.sidebars::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.sidebars::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 .sidebars a {

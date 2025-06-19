@@ -1,0 +1,235 @@
+<%- include('partials/head') %>
+  <%- include('partials/navbar') %>
+
+    <div class="grid-containersf">
+      <div class="grid-itemsf item1sf">
+        <%- include('partials/menu') %>
+      </div>
+      <div class="grid-itemsf item2sf">
+        <div class="container">
+          <form id="stockForm">
+            <label for="id_part_no_core">ID:</label>
+            <input type="text" id="id_part_no_core" name="id_part_no_core" required><br><br>
+
+            <label for="part_no">Part Number:</label>
+            <input type="text" id="part_no" name="part_no" required><br><br>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required><br><br>
+
+            <button type="button" onclick="submitForm('IN')" class="in"><i class="fa fa-save"
+                style="font-size:24px;"></i>IN</button>
+            <button type="button" onclick="submitForm('OUT')" class="out"><i class="fa fa-send-o"
+                style="font-size:24px"></i>OUT</button>
+          </form>
+
+          <div id="message"></div>
+
+          <div style="width: 100%; overflow-x: auto;height: 39vh;">
+            <canvas id="myChart2" style="min-width: 500px; height: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="grid-itemsf item3sf">
+        <div class="table-container">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <th>Seq No</th>
+                <th>ID Part No</th>
+                <th>Quantity</th>
+                <th>Stock in Time</th>
+                <th>Stock out Time</th>
+                <th>block_joint,
+                <th>cup_upper</th>
+                <th>cup_lower</th>
+                <th>cap</th>
+                <th>separator_1</th>
+                <th>separator_2</th>
+                <th>separator_3</th>
+                <th>separator_4</th>
+                <th>separator_5</th>
+                <th>separator_6</th>
+                <th>separator_7</th>
+                <th>tank_btm</th>
+                <th>tank_top</th>
+                <th>header_btm</th>
+                <th>header_top</th>
+                <th>side_p_btm</th>
+                <th>side_p_top</th>
+                <th>tube</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/cbrsl4.css">
+    <script>
+      const ctx2 = document.getElementById("myChart2").getContext("2d");
+
+      const gradient2 = ctx2.createLinearGradient(0, 0, 0, 800);
+      gradient2.addColorStop(0, "rgb(0, 128, 255)");
+      gradient2.addColorStop(0.5, "rgb(0, 255, 128)");
+      gradient2.addColorStop(1, "rgb(255, 128, 0)");
+
+      const myChart2 = new Chart(ctx2, {
+        type: "bar",
+        data: {
+          labels: [],
+          datasets: [{
+            label: "Core BRS Line 5",
+            data: [],
+            backgroundColor: gradient2,
+            borderColor: "rgba(0, 0, 0, 0)",
+            borderWidth: 1,
+            categoryPercentage: 0.7,
+            barPercentage: 0.9,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Part Number",
+                color: "white",
+                font: { size: 16 }
+              },
+              ticks: {
+                color: "white",
+                font: { size: 10, weight: "bold" },
+                align: "center",
+                maxRotation: 45,
+                minRotation: 45,
+                autoSkip: false
+              },
+              grid: { color: "rgba(186, 223, 238, 0.5)" }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Quantity",
+                color: "white",
+                font: { size: 16 }
+              },
+              ticks: { color: "white", font: { size: 14 } },
+              grid: { color: "rgba(186, 223, 238, 0.5)" }
+            }
+          },
+          plugins: {
+            legend: { labels: { color: "lightblue", font: { size: 14 } } },
+            datalabels: {
+              color: "white",
+              anchor: "center",
+              align: "center",
+              font: { weight: "bold", size: 14 },
+              formatter: (value) => value
+            }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      setInterval(() => {
+        fetch('http://192.168.100.100:3000/api/getCoreBRS5')
+          .then(response => response.json())
+          .then(data => {
+            myChart2.data.labels = data.ppLb;
+            myChart2.data.datasets[0].data = data.ppQty;
+            myChart2.update();
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, 1000);
+
+      async function submitForm(type) {
+        const part_no = document.getElementById("part_no").value;
+        const id_part_no_core = document.getElementById("id_part_no_core").value;
+        const quantity = document.getElementById("quantity").value;
+
+        if (!part_no || !id_part_no_core || !quantity) {
+          alert("กรุณากรอกข้อมูลให้ครบ");
+          return;
+        }
+
+        const data = { part_no, id_part_no_core, quantity, type };
+
+        try {
+          const response = await fetch('http://192.168.100.100:3000/insert-stock5', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            alert("บันทึกข้อมูลสำเร็จ!");
+          } else {
+            alert("เกิดข้อผิดพลาด: " + result.message);
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          alert("เกิดข้อผิดพลาดในการส่งข้อมูล");
+        }
+      }
+
+      async function fetchStockData() {
+        try {
+          const response = await fetch('http://192.168.100.100:3000/api/latest-stock-data-5');
+          const data = await response.json();
+
+          const tableBody = document.getElementById("tableBody");
+          tableBody.innerHTML = "";
+
+          data.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${row.id}</td>
+                <td>${row.id_part_no_core_5}</td>
+                <td>${row.quantity}</td>
+                <td>${row.timestamp ? new Date(row.timestamp).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }) : '-'}</td>
+                <td>${row.out ? new Date(row.out).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }) : '-'}</td>
+                 <td>${row.block_joint}</td>
+                <td>${row.cup_upper}</td>
+                <td>${row.cup_lower}</td>
+                <td>${row.cap}</td>
+                    <td>${row.separator_1}</td>
+                    <td>${row.separator_2}</td>
+                    <td>${row.separator_3}</td>
+                    <td>${row.separator_4}</td>
+                    <td>${row.separator_5}</td>
+                    <td>${row.separator_6}</td>
+                    <td>${row.separator_7}</td>
+                    <td>${row.tank_btm}</td>
+                    <td>${row.tank_top}</td>
+                    <td>${row.header_btm}</td>
+                    <td>${row.header_top}</td>
+                    <td>${row.side_p_btm}</td>
+                    <td>${row.side_p_top}</td>
+                    <td>${row.tube}</td>
+            `;
+            tableBody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error("Error fetching stock data:", error);
+        }
+      }
+      setInterval(fetchStockData, 1000);
+
+      fetchStockData();
+    </script>
+    </body>
+
+    </html>

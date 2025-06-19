@@ -8,8 +8,8 @@
       <div class="grid-itemsf item2sf">
         <div class="container">
           <form id="stockForm">
-            <label for="id_part_no">ID:</label>
-            <input type="text" id="id_part_no" name="id_part_no" required><br><br>
+            <label for="id_part_no_core">ID:</label>
+            <input type="text" id="id_part_no_core" name="id_part_no_core" required><br><br>
 
             <label for="part_no">Part Number:</label>
             <input type="text" id="part_no" name="part_no" required><br><br>
@@ -22,6 +22,8 @@
             <button type="button" onclick="submitForm('OUT')" class="out"><i class="fa fa-send-o"
                 style="font-size:24px"></i>OUT</button>
           </form>
+
+          <div id="message"></div>
 
           <div style="width: 100%; overflow-x: auto;height: 39vh;">
             <canvas id="myChart2" style="min-width: 500px; height: 100%;"></canvas>
@@ -64,11 +66,12 @@
         </div>
       </div>
     </div>
+    </div>
 
 
 
     <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="/css/cbrsl3.css">
+    <link rel="stylesheet" href="/css/cbrsl4.css">
     <script>
       const ctx2 = document.getElementById("myChart2").getContext("2d");
 
@@ -139,7 +142,7 @@
       });
 
       setInterval(() => {
-        fetch('http://192.168.1.100:3000/api/getCoreBRS3')
+        fetch('http://192.168.100.100:3000/api/getCoreBRS3')
           .then(response => response.json())
           .then(data => {
             myChart2.data.labels = data.ppLb;
@@ -151,21 +154,20 @@
           });
       }, 1000);
 
-
       async function submitForm(type) {
         const part_no = document.getElementById("part_no").value;
-        const id_part_no = document.getElementById("id_part_no").value;
+        const id_part_no_core = document.getElementById("id_part_no_core").value;
         const quantity = document.getElementById("quantity").value;
 
-        if (!part_no || !id_part_no || !quantity) {
+        if (!part_no || !id_part_no_core || !quantity) {
           alert("กรุณากรอกข้อมูลให้ครบ");
           return;
         }
 
-        const data = { part_no, id_part_no, quantity, type };
+        const data = { part_no, id_part_no_core, quantity, type };
 
         try {
-          const response = await fetch('http://192.168.1.100:3000/insert-stock3', {
+          const response = await fetch('http://192.168.100.100:3000/insert-stock3', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
@@ -183,10 +185,9 @@
         }
       }
 
-
       async function fetchStockData() {
         try {
-          const response = await fetch('http://192.168.1.100:3000/api/latest-stock-data-3');
+          const response = await fetch('http://192.168.100.100:3000/api/latest-stock-data-3');
           const data = await response.json();
 
           const tableBody = document.getElementById("tableBody");
@@ -196,28 +197,28 @@
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${row.id}</td>
-                <td>${row.id_part_no_3}</td>
+                <td>${row.id_part_no_core_3}</td>
                 <td>${row.quantity}</td>
                 <td>${row.timestamp ? new Date(row.timestamp).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }) : '-'}</td>
                 <td>${row.out ? new Date(row.out).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }) : '-'}</td>
-                <td>${row.block_joint}</td>
+                 <td>${row.block_joint}</td>
                 <td>${row.cup_upper}</td>
                 <td>${row.cup_lower}</td>
                 <td>${row.cap}</td>
-                <td>${row.separator_1}</td>
-                <td>${row.separator_2}</td>
-                <td>${row.separator_3}</td>
-                <td>${row.separator_4}</td>
-                <td>${row.separator_5}</td>
-                <td>${row.separator_6}</td>
-                <td>${row.separator_7}</td>
-                <td>${row.tank_btm}</td>
-                <td>${row.tank_top}</td>
-                <td>${row.header_btm}</td>
-                <td>${row.header_top}</td>
-                <td>${row.side_p_btm}</td>
-                <td>${row.side_p_top}</td>
-                <td>${row.tube}</td>
+                    <td>${row.separator_1}</td>
+                    <td>${row.separator_2}</td>
+                    <td>${row.separator_3}</td>
+                    <td>${row.separator_4}</td>
+                    <td>${row.separator_5}</td>
+                    <td>${row.separator_6}</td>
+                    <td>${row.separator_7}</td>
+                    <td>${row.tank_btm}</td>
+                    <td>${row.tank_top}</td>
+                    <td>${row.header_btm}</td>
+                    <td>${row.header_top}</td>
+                    <td>${row.side_p_btm}</td>
+                    <td>${row.side_p_top}</td>
+                    <td>${row.tube}</td>
             `;
             tableBody.appendChild(tr);
           });
@@ -228,7 +229,6 @@
       setInterval(fetchStockData, 1000);
 
       fetchStockData();
-
     </script>
     </body>
 

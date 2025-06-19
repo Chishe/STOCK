@@ -2,7 +2,7 @@ let lastData = [];
 
 async function fetchStockData() {
   try {
-    const response = await fetch('http://192.168.1.100:3000/api/latest-stock-data-2');
+    const response = await fetch('http://192.168.100.100:3000/api/latest-stock-data-02');
     const data = await response.json();
     
     if (JSON.stringify(data) === JSON.stringify(lastData)) {
@@ -18,7 +18,7 @@ async function fetchStockData() {
       const tr = document.createElement("tr");
       tr.innerHTML = `
             <td>${row.id}</td>
-            <td>${row.id_part_no_2}</td>
+            <td>${row.id_part_no_core_2}</td>
             <td>${row.quantity}</td>
             <td>${row.timestamp}</td>
             <td>${row.out}</td>

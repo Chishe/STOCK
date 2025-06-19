@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="dropdown">
-          <div class="dropdown-btn1">ALL(ฺBRS) ▼</div>
+          <div class="dropdown-btn2">ALL(ฺBRS) ▼</div>
           <div class="dropdown-content">
             <a href="/cbrsl1">Line 1</a>
             <a href="/cbrsl2">Line 2</a>
@@ -39,7 +39,7 @@
         <a href="/brz">Brazing</a>
         <a href="/suf">Surface</a>
         <div class="dropdown">
-          <div class="dropdown-btn2">Setting ▼</div>
+          <div class="dropdown-btn3">Setting ▼</div>
           <div class="dropdown-content">
             <a href="/set1">Press Part</a>
             <a href="/set2">Center Repack</a>
@@ -57,6 +57,9 @@
     this.parentElement.classList.toggle("active");
   });
   document.querySelector(".dropdown-btn2").addEventListener("click", function () {
+    this.parentElement.classList.toggle("active");
+  });
+  document.querySelector(".dropdown-btn3").addEventListener("click", function () {
     this.parentElement.classList.toggle("active");
   });
 </script>

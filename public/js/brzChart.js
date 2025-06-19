@@ -67,7 +67,7 @@ const myChart2 = new Chart(ctx2, {
 });
 
 setInterval(() => {
-  fetch('http://192.168.1.100:3000/api/getBrazing')
+  fetch('http://192.168.100.100:3000/api/getBrazing')
     .then(response => response.json())
     .then(data => {
       myChart2.data.labels = data.ppLb;
@@ -96,7 +96,7 @@ function submitForm(type) {
     type: type,
   };
 
-  fetch('http://192.168.1.100:3000/api/updateStock5', {
+  fetch('http://192.168.100.100:3000/api/updateStock5', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

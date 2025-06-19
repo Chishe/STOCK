@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const part_no = document.getElementById('part_no').value;
     const qty = document.getElementById('qty').value;
 
-    const response = await fetch('http://192.168.1.100:3000/add2', {
+    const response = await fetch('http://192.168.100.100:3000/add2', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ part_no, qty })
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function deletePart(id) {
     if (confirm("Are you sure you want to delete this item?")) {
       try {
-        const response = await fetch(`http://192.168.1.100:3000/delete2/${id}`, {
+        const response = await fetch(`http://192.168.100.100:3000/delete2/${id}`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' }
         });

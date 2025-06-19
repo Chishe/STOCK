@@ -13,8 +13,8 @@
       <div class="grid-itemq item3q">
         <div class="container">
           <form id="stockForm">
-            <label for="id_part_no">ID :</label>
-            <input type="text" id="id_part_no" name="id_part_no" required>
+            <label for="id_part_no_core">ID :</label>
+            <input type="text" id="id_part_no_core" name="id_part_no_core" required>
 
             <label for="part_no">Part Number:</label>
             <input type="text" id="part_no" name="part_no" required>
@@ -64,7 +64,7 @@
 
     <script>
       function submitForm(type) {
-        const id_part_no = document.getElementById("id_part_no").value.trim(); // Remove extra spaces
+        const id_part_no_core = document.getElementById("id_part_no_core").value.trim(); // Remove extra spaces
         const partNo = document.getElementById("part_no").value.trim();  // Remove extra spaces
         const quantity = parseInt(document.getElementById("quantity").value);
 
@@ -75,7 +75,7 @@
         }
 
         const data = {
-          id_part_no: id_part_no,
+          id_part_no_core: id_part_no_core,
           part_no: partNo,
           quantity: quantity,
           type: type,
@@ -84,7 +84,7 @@
         console.log(data);
 
         // API call to update stock
-        fetch('http://192.168.1.100:3000/api/updateStock2', {
+        fetch('http://192.168.100.100:3000/api/updateStock2', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

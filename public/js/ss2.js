@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('editModal').style.display = 'none';
 });
 
-function openEditModal(id, id_part_no_2, quantity) {
+function openEditModal(id, id_part_no_core_2, quantity) {
     console.log("Opening modal for ID:", id);
     document.getElementById('editId').value = id;
-    document.getElementById('editPartNo').value = id_part_no_2;
+    document.getElementById('editPartNo').value = id_part_no_core_2;
     document.getElementById('editQty').value = quantity;
     document.getElementById('editModal').style.display = 'flex';
 }
@@ -56,7 +56,7 @@ async function searchData() {
     console.log(searchDate, searchStartTime, searchEndTime);
 
     try {
-        const response = await fetch(`http://192.168.1.100:3000/search2?${queryString}`, {
+        const response = await fetch(`http://192.168.100.100:3000/search2?${queryString}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -84,12 +84,12 @@ function updateTable(data) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${item.id}</td>
-            <td>${item.id_part_no_2}</td>
+            <td>${item.id_part_no_core_2}</td>
             <td>${item.quantity}</td>
             <td>${item.timestamp}</td>
             <td>${item.out}</td>
             <td>
-                <button class="edit" data-id="${item.id}" data-part-no="${item.id_part_no_2}" data-quantity="${item.quantity}">
+                <button class="edit" data-id="${item.id}" data-part-no="${item.id_part_no_core_2}" data-quantity="${item.quantity}">
                     <i class="fa fa-edit" style="font-size:36px"></i>Edit
                 </button>
                 <button class="del" data-id="${item.id}">
@@ -122,7 +122,7 @@ function updateTable(data) {
 async function deleteAll() {
     if (confirm("Are you sure you want to delete all parts?")) {
         try {
-            const response = await fetch('http://192.168.1.100:3000/delete-all2', { 
+            const response = await fetch('http://192.168.100.100:3000/delete-all2', { 
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -147,7 +147,7 @@ async function deleteAll() {
 async function deletePart(id) {
     if (confirm("Are you sure you want to delete this item?")) {
         try {
-            const response = await fetch(`http://192.168.1.100:3000/delete2/${id}`, {
+            const response = await fetch(`http://192.168.100.100:3000/delete2/${id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });

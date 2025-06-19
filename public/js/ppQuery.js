@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchNormalform() {
     try {
-        const response = await fetch('http://192.168.1.100:1880/api/Normal');
+        const response = await fetch('http://192.168.100.100:1880/api/Normal');
         const data = await response.json();
         document.getElementById("qr_code").value = '';
         document.getElementById("part_no").value = '';
@@ -45,11 +45,11 @@ async function fetchNormalform() {
 
 async function fetchQRCode() {
     try {
-        const response = await fetch('http://192.168.1.100:1880/api/scanQRCode');
+        const response = await fetch('http://192.168.100.100:1880/api/scanQRCode');
         const data = await response.json();
         document.getElementById("qr_code").value = '';
         document.getElementById("partial_part_no").value = '';
-        if (data.part_no && data.id_part_no) {
+        if (data.part_no && data.id_part_no_core) {
             document.getElementById("qr_code").value = data.qr_code;
             document.getElementById("partial_part_no").value = data.part_no;
             document.getElementById("partial_quantity").disabled = false;
@@ -61,11 +61,11 @@ async function fetchQRCode() {
 
 async function fetchQRinCode() {
     try {
-        const response = await fetch('http://192.168.1.100:1880/api/inQRCode');
+        const response = await fetch('http://192.168.100.100:1880/api/inQRCode');
         const data = await response.json();
         document.getElementById("in_qr_code").value = '';
         document.getElementById("in_part_no").value = '';
-        if (data.part_no && data.id_part_no) {
+        if (data.part_no && data.id_part_no_core) {
             document.getElementById("in_qr_code").value = data.qr_code;
             document.getElementById("in_part_no").value = data.part_no;
             document.getElementById("in_quantity").disabled = false;
@@ -93,22 +93,22 @@ function submitForm(type) {
 
     const formType = formTypeElement.value;
     lastFormType = formType;
-    let part_no, id_part_no, quantity, qr_code;
+    let part_no, id_part_no_core, quantity, qr_code;
 
     if (formType === 'normal') {
         part_no = document.getElementById('part_no').value.trim();
-        id_part_no = document.getElementById('id_part_no').value.trim();
+        id_part_no_core = document.getElementById('id_part_no_core').value.trim();
         quantity = 240;
     } else if (formType === 'partialin') {
         qr_code = document.getElementById('in_qr_code').value.trim();
         part_no = document.getElementById('in_part_no').value.trim();
         quantity = parseInt(document.getElementById('in_quantity').value.trim(), 10);
-        id_part_no = qr_code;
+        id_part_no_core = qr_code;
     } else if (formType === 'partial') {
         qr_code = document.getElementById('qr_code').value.trim();
         part_no = document.getElementById('partial_part_no').value.trim();
         quantity = parseInt(document.getElementById('partial_quantity').value.trim(), 10);
-        id_part_no = qr_code;
+        id_part_no_core = qr_code;
     }
 
     if (!quantity || !part_no) {
@@ -118,24 +118,24 @@ function submitForm(type) {
 
     console.log("Form Type: ", formType);
     console.log("Part Number: ", part_no);
-    console.log("ID Part No: ", id_part_no);
+    console.log("ID Part No: ", id_part_no_core);
     console.log("Quantity: ", quantity);
 
     let query = "";
     if (type === "IN" && formType === 'partialin') {
         query = `
-        INSERT INTO log_data_stock_1 (part_no, id_part_no_1, quantity, timestamp)
-        VALUES ('${part_no}', '${id_part_no}', '${quantity}', CURRENT_TIMESTAMP)
-        ON CONFLICT (id_part_no_1)
+        INSERT INTO log_data_stock_1 (part_no, id_part_no_core_1, quantity, timestamp)
+        VALUES ('${part_no}', '${id_part_no_core}', '${quantity}', CURRENT_TIMESTAMP)
+        ON CONFLICT (id_part_no_core_1)
         DO UPDATE SET 
             quantity = (CAST(log_data_stock_1.quantity AS INTEGER) + ${quantity})::TEXT,
             timestamp = CURRENT_TIMESTAMP;
         `;
     } else if (type === "IN") {
         query = `
-        INSERT INTO log_data_stock_1 (part_no, id_part_no_1, quantity, timestamp)
-        VALUES ('${part_no}', '${id_part_no}', '${quantity}', CURRENT_TIMESTAMP)
-        ON CONFLICT (id_part_no_1)
+        INSERT INTO log_data_stock_1 (part_no, id_part_no_core_1, quantity, timestamp)
+        VALUES ('${part_no}', '${id_part_no_core}', '${quantity}', CURRENT_TIMESTAMP)
+        ON CONFLICT (id_part_no_core_1)
         DO UPDATE SET 
             quantity = (CAST(log_data_stock_1.quantity AS INTEGER) + ${quantity})::TEXT,
             timestamp = CURRENT_TIMESTAMP;
@@ -144,19 +144,19 @@ function submitForm(type) {
             qr_code: qr_code,
             part_no: part_no,
             quantity: quantity,
-            id_part_no: id_part_no
+            id_part_no_core: id_part_no_core
         };
         updateStock('update_stock', dataUpdate);
     } else if (type === "OUT") {
         query = `
         UPDATE log_data_stock_1 
         SET quantity = (CAST(quantity AS INTEGER) - ${quantity})::TEXT
-        WHERE part_no = '${part_no}' AND id_part_no_1 = '${id_part_no}';
+        WHERE part_no = '${part_no}' AND id_part_no_core_1 = '${id_part_no_core}';
         `;
         query += `
-        INSERT INTO log_data_stock_2 (part_no, id_part_no_2, quantity, timestamp)
-        VALUES ('${part_no}', '${id_part_no}', '${quantity}', CURRENT_TIMESTAMP)
-        ON CONFLICT (id_part_no_2)
+        INSERT INTO log_data_stock_2 (part_no, id_part_no_core_2, quantity, timestamp)
+        VALUES ('${part_no}', '${id_part_no_core}', '${quantity}', CURRENT_TIMESTAMP)
+        ON CONFLICT (id_part_no_core_2)
         DO UPDATE SET 
             quantity = (CAST(log_data_stock_2.quantity AS INTEGER) + ${quantity})::TEXT,
             timestamp = CURRENT_TIMESTAMP;
@@ -165,14 +165,14 @@ function submitForm(type) {
             qr_code: qr_code,
             part_no: part_no,
             quantity: quantity,
-            id_part_no: id_part_no
+            id_part_no_core: id_part_no_core
         };
         updateStock('update_stock2', dataUpdate);
     }
 
     console.log("Generated SQL Query: ", query);
 
-    fetch('http://192.168.1.100:3000/api/insertData', {
+    fetch('http://192.168.100.100:3000/api/insertData', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ function submitForm(type) {
 }
 
 function updateStock(endpoint, data) {
-    fetch(`http://192.168.1.100:1880/${endpoint}`, {
+    fetch(`http://192.168.100.100:1880/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -219,7 +219,7 @@ function updateStock(endpoint, data) {
 
 function clearForm() {
     document.getElementById('part_no').value = '';
-    document.getElementById('id_part_no').value = '';
+    document.getElementById('id_part_no_core').value = '';
     document.getElementById('qr_code').value = '';
     document.getElementById('partial_part_no').value = '';
     document.getElementById('partial_quantity').value = '';

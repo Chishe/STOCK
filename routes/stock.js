@@ -48,7 +48,6 @@ router.get('/cbrsl6', (req, res) => {
   res.render('cbrsl6', { title: 'Core BRS Line 6' });
 });
 
-
 router.get('/brz', (req, res) => {
   res.render('brz', { title: 'Brazing' });
 });
@@ -87,7 +86,7 @@ router.get('/mtc6', (req, res) => {
 
 router.get("/ss1", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM log_data_stock_1 ORDER BY id DESC");
+    const result = await pool.query("SELECT * FROM log_data_stock_core_1 ORDER BY id DESC");
     res.render("ss1", { title: "Press Part", data: result.rows });
   } catch (err) {
     console.error(err);
@@ -97,7 +96,7 @@ router.get("/ss1", async (req, res) => {
 
 router.get("/ss2", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM log_data_stock_2 ORDER BY id DESC");
+    const result = await pool.query("SELECT * FROM log_data_stock_core_2 ORDER BY id DESC");
     res.render("ss2", { title: "Center Repack", data: result.rows });
   } catch (err) {
     console.error(err);
@@ -128,8 +127,8 @@ SELECT
         m.side_p_btm,
         m.side_p_top,
         m.tube
-      FROM log_data_stock_3 l
-      LEFT JOIN matching m ON l.id_part_no_3 = m.core_id
+      FROM log_data_stock_core_3 l
+      LEFT JOIN matching m ON l.id_part_no_core_3 = m.core_id
       ORDER BY l.id DESC
       LIMIT 100;
     `);
@@ -140,7 +139,6 @@ SELECT
     res.status(500).send("Server Error");
   }
 });
-
 
 router.get("/ss4", async (req, res) => {
   try {
@@ -165,8 +163,8 @@ SELECT
         m.side_p_btm,
         m.side_p_top,
         m.tube
-      FROM log_data_stock_4 l
-      LEFT JOIN matching m ON l.id_part_no_4 = m.core_id
+      FROM log_data_stock_core_4 l
+      LEFT JOIN matching m ON l.id_part_no_core_4 = m.core_id
       ORDER BY l.id DESC
       LIMIT 100;
     `);
@@ -197,7 +195,6 @@ router.get("/ss6", async (req, res) => {
   }
 });
 
-
 router.get("/set1", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM judgement_line1 ORDER BY id ASC");
@@ -208,11 +205,226 @@ router.get("/set1", async (req, res) => {
   }
 });
 
-
 router.get("/set2", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM judgement_line2 ORDER BY id ASC");
     res.render("set2", { title: "Set Min Center Repack", data: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/ss1", async (req, res) => {
+  try {
+    const result = await pool.query(`
+SELECT 
+        l.*,
+        m.block_joint,
+        m.cup_upper,
+        m.cup_lower,
+        m.cap,
+        m.separator_1,
+        m.separator_2,
+        m.separator_3,
+        m.separator_4,
+        m.separator_5,
+        m.separator_6,
+        m.separator_7,
+        m.tank_btm,
+        m.tank_top,
+        m.header_btm,
+        m.header_top,
+        m.side_p_btm,
+        m.side_p_top,
+        m.tube
+      FROM log_data_stock_core_1 l
+      LEFT JOIN matching m ON l.id_part_no_core_1 = m.core_id
+      ORDER BY l.id DESC
+      LIMIT 100;
+    `);
+    console.log(result.rows[0]);
+    res.render("ss01", { title: "Core BRS Line 1", data: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/ss2", async (req, res) => {
+  try {
+    const result = await pool.query(`
+SELECT 
+        l.*,
+        m.block_joint,
+        m.cup_upper,
+        m.cup_lower,
+        m.cap,
+        m.separator_1,
+        m.separator_2,
+        m.separator_3,
+        m.separator_4,
+        m.separator_5,
+        m.separator_6,
+        m.separator_7,
+        m.tank_btm,
+        m.tank_top,
+        m.header_btm,
+        m.header_top,
+        m.side_p_btm,
+        m.side_p_top,
+        m.tube
+      FROM log_data_stock_core_2 l
+      LEFT JOIN matching m ON l.id_part_no_core_2 = m.core_id
+      ORDER BY l.id DESC
+      LIMIT 100;
+    `);
+    console.log(result.rows[0]);
+    res.render("ss02", { title: "Core BRS Line 2", data: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/ss03", async (req, res) => {
+  try {
+    const result = await pool.query(`
+SELECT 
+        l.*,
+        m.block_joint,
+        m.cup_upper,
+        m.cup_lower,
+        m.cap,
+        m.separator_1,
+        m.separator_2,
+        m.separator_3,
+        m.separator_4,
+        m.separator_5,
+        m.separator_6,
+        m.separator_7,
+        m.tank_btm,
+        m.tank_top,
+        m.header_btm,
+        m.header_top,
+        m.side_p_btm,
+        m.side_p_top,
+        m.tube
+      FROM log_data_stock_core_3 l
+      LEFT JOIN matching m ON l.id_part_no_core_3 = m.core_id
+      ORDER BY l.id DESC
+      LIMIT 100;
+    `);
+    console.log(result.rows[0]);
+    res.render("ss03", { title: "Core BRS Line 3", data: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/ss04", async (req, res) => {
+  try {
+    const result = await pool.query(`
+SELECT 
+        l.*,
+        m.block_joint,
+        m.cup_upper,
+        m.cup_lower,
+        m.cap,
+        m.separator_1,
+        m.separator_2,
+        m.separator_3,
+        m.separator_4,
+        m.separator_5,
+        m.separator_6,
+        m.separator_7,
+        m.tank_btm,
+        m.tank_top,
+        m.header_btm,
+        m.header_top,
+        m.side_p_btm,
+        m.side_p_top,
+        m.tube
+      FROM log_data_stock_core_4 l
+      LEFT JOIN matching m ON l.id_part_no_core_4 = m.core_id
+      ORDER BY l.id DESC
+      LIMIT 100;
+    `);
+    console.log(result.rows[0]);
+    res.render("ss04", { title: "Core BRS Line 4", data: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/ss05", async (req, res) => {
+  try {
+    const result = await pool.query(`
+SELECT 
+        l.*,
+        m.block_joint,
+        m.cup_upper,
+        m.cup_lower,
+        m.cap,
+        m.separator_1,
+        m.separator_2,
+        m.separator_3,
+        m.separator_4,
+        m.separator_5,
+        m.separator_6,
+        m.separator_7,
+        m.tank_btm,
+        m.tank_top,
+        m.header_btm,
+        m.header_top,
+        m.side_p_btm,
+        m.side_p_top,
+        m.tube
+      FROM log_data_stock_core_5 l
+      LEFT JOIN matching m ON l.id_part_no_core_5 = m.core_id
+      ORDER BY l.id DESC
+      LIMIT 100;
+    `);
+    console.log(result.rows[0]);
+    res.render("ss05", { title: "Core BRS Line 5", data: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/ss06", async (req, res) => {
+  try {
+    const result = await pool.query(`
+SELECT 
+        l.*,
+        m.block_joint,
+        m.cup_upper,
+        m.cup_lower,
+        m.cap,
+        m.separator_1,
+        m.separator_2,
+        m.separator_3,
+        m.separator_4,
+        m.separator_5,
+        m.separator_6,
+        m.separator_7,
+        m.tank_btm,
+        m.tank_top,
+        m.header_btm,
+        m.header_top,
+        m.side_p_btm,
+        m.side_p_top,
+        m.tube
+      FROM log_data_stock_core_6 l
+      LEFT JOIN matching m ON l.id_part_no_core_6 = m.core_id
+      ORDER BY l.id DESC
+      LIMIT 100;
+    `);
+    console.log(result.rows[0]);
+    res.render("ss06", { title: "Core BRS Line 6", data: result.rows });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");

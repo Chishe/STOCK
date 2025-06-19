@@ -1,6 +1,6 @@
 async function fetchStockData() {
     try {
-      const response = await fetch('http://192.168.1.100:3000/api/latest-stock-data-5');
+      const response = await fetch('http://192.168.100.100:3000/api/latest-stock-data-5');
       const data = await response.json();
 
       const tableBody = document.getElementById("tableBody");

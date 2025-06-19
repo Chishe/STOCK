@@ -8,8 +8,8 @@
       <div class="grid-itemsf item2sf">
         <div class="container">
           <form id="stockForm">
-            <label for="id_part_no">ID:</label>
-            <input type="text" id="id_part_no" name="id_part_no" required><br><br>
+            <label for="id_part_no_core">ID:</label>
+            <input type="text" id="id_part_no_core" name="id_part_no_core" required><br><br>
 
             <label for="part_no">Part Number:</label>
             <input type="text" id="part_no" name="part_no" required><br><br>
@@ -142,7 +142,7 @@
       });
 
       setInterval(() => {
-        fetch('http://192.168.1.100:3000/api/getCoreBRS4')
+        fetch('http://192.168.100.100:3000/api/getCoreBRS4')
           .then(response => response.json())
           .then(data => {
             myChart2.data.labels = data.ppLb;
@@ -156,18 +156,18 @@
 
       async function submitForm(type) {
         const part_no = document.getElementById("part_no").value;
-        const id_part_no = document.getElementById("id_part_no").value;
+        const id_part_no_core = document.getElementById("id_part_no_core").value;
         const quantity = document.getElementById("quantity").value;
 
-        if (!part_no || !id_part_no || !quantity) {
+        if (!part_no || !id_part_no_core || !quantity) {
           alert("กรุณากรอกข้อมูลให้ครบ");
           return;
         }
 
-        const data = { part_no, id_part_no, quantity, type };
+        const data = { part_no, id_part_no_core, quantity, type };
 
         try {
-          const response = await fetch('http://192.168.1.100:3000/insert-stock4', {
+          const response = await fetch('http://192.168.100.100:3000/insert-stock4', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
@@ -187,7 +187,7 @@
 
       async function fetchStockData() {
         try {
-          const response = await fetch('http://192.168.1.100:3000/api/latest-stock-data-4');
+          const response = await fetch('http://192.168.100.100:3000/api/latest-stock-data-4');
           const data = await response.json();
 
           const tableBody = document.getElementById("tableBody");
@@ -197,7 +197,7 @@
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${row.id}</td>
-                <td>${row.id_part_no_4}</td>
+                <td>${row.id_part_no_core_4}</td>
                 <td>${row.quantity}</td>
                 <td>${row.timestamp ? new Date(row.timestamp).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }) : '-'}</td>
                 <td>${row.out ? new Date(row.out).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }) : '-'}</td>

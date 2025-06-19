@@ -99,7 +99,7 @@ const myChart2 = new Chart(ctx2, {
     plugins: [ChartDataLabels],
 });
 document.addEventListener("DOMContentLoaded", () => {
-    fetch('http://192.168.1.100:3000/api/getMain1')
+    fetch('http://192.168.100.100:3000/api/getMain1')
         .then(response => response.json())
         .then(data => {
             myChart.data.labels = data.part_no;
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => console.error('Error fetching data from /api/getMain1:', error));
 
-    fetch('http://192.168.1.100:3000/api/getMain2')
+    fetch('http://192.168.100.100:3000/api/getMain2')
         .then(response => response.json())
         .then(data => {
             myChart2.data.labels = data.part_no;
@@ -131,7 +131,7 @@ document.getElementById("updateForm").addEventListener("submit", async function 
     }
 
     try {
-        const response = await fetch("http://192.168.1.100:3000/api/getStockData", {
+        const response = await fetch("http://192.168.100.100:3000/api/getStockData", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ coreNumber, volume })
